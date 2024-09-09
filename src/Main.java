@@ -1,356 +1,436 @@
 import javax.print.StreamPrintServiceFactory;
 import java.lang.reflect.Array;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-    public static void main(String[] args) {
-                //1
-//                Scanner scanner = new Scanner(System.in);
-//                System.out.print("Введите целое число: ");
-//                int number = scanner.nextInt();
-//
-//                if (number % 2 == 0) {
-//                    System.out.println(number + " - четное число");
-//                } else {
-//                    System.out.println(number + " - нечетное число");
-//                }
-                //2
+        class ExceptionHandling {
 
-//                Scanner scanner = new Scanner(System.in);
-//                System.out.print("Введите первое число: ");
-//                int first = scanner.nextInt();
-//                System.out.print("Введите второе число: ");
-//                int second = scanner.nextInt();
-//                System.out.print("Введите третье число: ");
-//                int third = scanner.nextInt();
-//
-//                int min = first;
-//                if (second < min) {
-//                    min = second;
-//                }
-//                if (third < min) {
-//                    min = third;
-//                }
-//
-//                System.out.println("Минимальное число: " + min);
+            // 1
+            public static int findMax(int num1, int num2) throws Exception {
+                if (num1 == num2) {
+                    throw new Exception("Числа равны");
+                }
+                return Math.max(num1, num2);
+            }
 
-                //3
+            // 2
+            public static double divide(int dividend, int divisor) throws ArithmeticException {
+                if (divisor == 0) {
+                    throw new ArithmeticException("Деление на ноль недопустимо");
+                }
+                return (double) dividend / divisor;
+            }
 
-//                System.out.println("Таблица умножения на 5:");
-//                for (int i = 1; i <= 10; i++) {
-//                    System.out.println("5 * " + i + " = " + (5 * i));
-//                }
+            // 3
+            public static int convertToInt(String str) throws NumberFormatException {
+                return Integer.parseInt(str);
+            }
 
-                //4
+            // 4
+            public static void checkAge(int age) throws IllegalArgumentException {
+                if (age < 0 || age > 150) {
+                    throw new IllegalArgumentException("Недопустимый возраст");
+                }
+            }
 
-//                Scanner scanner = new Scanner(System.in);
-//                System.out.print("Введите число N: ");
-//                int n = scanner.nextInt();
-//
-//                int sum = 0;
-//                for (int i = 1; i <= n; i++) {
-//                    sum += i;
-//                }
-//
-//                System.out.println("Сумма чисел от 1 до " + n + " = " + sum);
+            // 5
+            public static double findSquareRoot(double num) throws IllegalArgumentException {
+                if (num < 0) {
+                    throw new IllegalArgumentException("Число отрицательное");
+                }
+                return Math.sqrt(num);
+            }
 
-                //5
+            // 6
+            public static long factorial(int num) throws IllegalArgumentException {
+                if (num < 0) {
+                    throw new IllegalArgumentException("Число отрицательное");
+                }
+                if (num == 0) {
+                    return 1;
+                }
+                long result = 1;
+                for (int i = 1; i <= num; i++) {
+                    result *= i;
+                }
+                return result;
+            }
 
-//                Scanner scanner = new Scanner(System.in);
-//                System.out.print("Введите число N: ");
-//                int n = scanner.nextInt();
-//
-//                int first = 0;
-//                int second = 1;
-//                System.out.print("Первые " + n + " чисел Фибоначчи: ");
-//                for (int i = 0; i < n; i++) {
-//                    System.out.print(first + " ");
-//                    int next = first + second;
-//                    first = second;
-//                    second = next;
-//                }
-//                System.out.println();
+            // 7
+            public static void checkArrayForZeros(int[] array) throws Exception {
+                if (Arrays.stream(array).anyMatch(x -> x == 0)) {
+                    throw new Exception("В массиве есть нули");
+                }
+            }
 
-                //6
+            // 8
+            public static double power(double base, int exponent) throws IllegalArgumentException {
+                if (exponent < 0) {
+                    throw new IllegalArgumentException("Степень отрицательная");
+                }
+                return Math.pow(base, exponent);
+            }
 
-//                Scanner scanner = new Scanner(System.in);
-//                System.out.print("Введите целое число: ");
-//                int number = scanner.nextInt();
-//
-//                boolean isPrime = true;
-//                if (number <= 1) {
-//                    isPrime = false;
-//                } else {
-//                    for (int i = 2; i <= Math.sqrt(number); i++) {
-//                        if (number % i == 0) {
-//                            isPrime = false;
-//                            break;
-//                        }
-//                    }
-//                }
-//
-//                if (isPrime) {
-//                    System.out.println(number + " - простое число");
-//                } else {
-//                    System.out.println(number + " - не простое число");
-//                }
+            // 9
+            public static String truncateString(String str, int maxLength) throws Exception {
+                if (maxLength > str.length()) {
+                    throw new Exception("Число символов больше длины строки");
+                }
+                return str.substring(0, maxLength);
+            }
 
-                //7
+            // 10
+            public static int findElement(int[] array, int element) throws Exception {
+                for (int i = 0; i < array.length; i++) {
+                    if (array[i] == element) {
+                        return i;
+                    }
+                }
+                throw new Exception("Элемент не найден в массиве");
+            }
 
-//                Scanner scanner = new Scanner(System.in);
-//                System.out.print("Введите число N: ");
-//                int n = scanner.nextInt();
-//
-//                System.out.print("Числа от " + n + " до 1 в обратном порядке: ");
-//                for (int i = n; i >= 1; i--) {
-//                    System.out.print(i + " ");
-//                }
-//                System.out.println();
+            // 11
+            public static String convertToBinary(int num) throws IllegalArgumentException {
+                if (num < 0) {
+                    throw new IllegalArgumentException("Число отрицательное");
+                }
+                return Integer.toBinaryString(num);
+            }
 
-                //8
+            // 12
+            public static boolean isDivisible(int dividend, int divisor) throws ArithmeticException {
+                if (divisor == 0) {
+                    throw new ArithmeticException("Деление на ноль недопустимо");
+                }
+                return dividend % divisor == 0;
+            }
 
-//                Scanner scanner = new Scanner(System.in);
-//                System.out.print("Введите число A: ");
-//                int a = scanner.nextInt();
-//                System.out.print("Введите число B: ");
-//                int b = scanner.nextInt();
-//
-//                int sum = 0;
-//                for (int i = a; i <= b; i++) {
-//                    if (i % 2 == 0) {
-//                        sum += i;
-//                    }
-//                }
-//
-//                System.out.println("Сумма четных чисел в диапазоне от " + a + " до " + b + " равна " + sum);
+            // 13
+            public static <T> T getElementFromList(List<T> list, int index) throws IndexOutOfBoundsException {
+                return list.get(index);
+            }
 
-                //9
+            // 14
+            public static void checkPassword(String password) throws WeakPasswordException {
+                if (password.length() < 8) {
+                    throw new WeakPasswordException("Пароль слишком короткий");
+                }
+            }
 
-//                Scanner scanner = new Scanner(System.in);
-//                System.out.print("Введите строку: ");
-//                String inputString = scanner.nextLine();
-//
-//                String reversedString = new StringBuilder(inputString).reverse().toString();
-//
-//                System.out.println("Строка в обратном порядке: " + reversedString);
+            // 15
+            public static void checkDate(String date) throws DateTimeParseException {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+                try {
+                    LocalDate.parse(date, formatter);
+                } catch (IllegalArgumentException e) {
+                    throw new DateTimeParseException("Некорректный формат даты. Должен быть dd.MM.yyyy", date, 0);
+                }
+            }
 
-                //10
+            // 16
+            public static String concatenateStrings(String str1, String str2) throws NullPointerException {
+                if (str1 == null || str2 == null) {
+                    throw new NullPointerException("Одна из строк равна null");
+                }
+                return str1 + str2;
+            }
 
-//                Scanner scanner = new Scanner(System.in);
-//                System.out.print("Введите целое число: ");
-//                int number = scanner.nextInt();
-//
-//                int count = 0;
-//                if (number == 0) {
-//                    count = 1;
-//                } else {
-//                    while (number != 0) {
-//                        number /= 10;
-//                        count++;
-//                    }
-//                }
-//
-//                System.out.println("Количество цифр в числе: " + count);
+            // 17
+            public static int getRemainder(int dividend, int divisor) throws ArithmeticException {
+                if (divisor == 0) {
+                    throw new ArithmeticException("Деление на ноль недопустимо");
+                }
+                return dividend % divisor;
+            }
 
-                //11
+            // 18
+            public static double squareRoot(double num) throws IllegalArgumentException {
+                if (num < 0) {
+                    throw new IllegalArgumentException("Число отрицательное");
+                }
+                return Math.sqrt(num);
+            }
 
-//                Scanner scanner = new Scanner(System.in);
-//                System.out.print("Введите целое число N: ");
-//                int n = scanner.nextInt();
-//
-//                long factorial = 1;
-//                for (int i = 1; i <= n; i++) {
-//                    factorial *= i;
-//                }
-//
-//                System.out.println("Факториал числа " + n + " равен " + factorial);
+            // 19
+            public static double celsiusToFahrenheit(double celsius) throws IllegalArgumentException {
+                if (celsius < -273.15) {
+                    throw new IllegalArgumentException("Температура меньше абсолютного нуля");
+                }
+                return celsius * 9 / 5 + 32;
+            }
 
-                //12
+            // 20
+            public static void checkEmptyString(String str) throws Exception {
+                if (str == null || str.isEmpty()) {
+                    throw new Exception("Строка пустая или равна null");
+                }
+            }
 
-//                Scanner scanner = new Scanner(System.in);
-//                System.out.print("Введите целое число: ");
-//                int number = scanner.nextInt();
-//
-//                int sum = 0;
-//                while (number != 0) {
-//                    sum += number % 10;
-//                    number /= 10;
-//                }
-//
-//                System.out.println("Сумма цифр числа: " + sum);
+            public static class WeakPasswordException extends Exception {
+                public WeakPasswordException(String message) {
+                    super(message);
+                }
+            }
 
-                //13
+            public static void main(String[] args) {
+                Scanner scanner = new Scanner(System.in);
 
-//                Scanner scanner = new Scanner(System.in);
-//                System.out.print("Введите строку: ");
-//                String inputString = scanner.nextLine();
-//
-//                String reversedString = new StringBuilder(inputString).reverse().toString();
-//
-//                if (inputString.equalsIgnoreCase(reversedString)) {
-//                    System.out.println("Строка является палиндромом");
-//                } else {
-//                    System.out.println("Строка не является палиндромом");
-//                }
+                try {
+                    System.out.print("Введите первое число: ");
+                    int num1 = scanner.nextInt();
+                    System.out.print("Введите второе число: ");
+                    int num2 = scanner.nextInt();
 
-                //14
+                    int max = findMax(num1, num2);
+                    System.out.println("Максимальное число: " + max);
+                } catch (Exception e) {
+                    System.out.println("Ошибка: " + e.getMessage());
+                }
 
-//                Scanner scanner = new Scanner(System.in);
-//                System.out.print("Введите размер массива: ");
-//                int arraySize = scanner.nextInt();
-//
-//                int[] array = new int[arraySize];
-//                System.out.println("Введите элементы массива:");
-//                for (int i = 0; i < arraySize; i++) {
-//                    array[i] = scanner.nextInt();
-//                }
-//
-//                int max = array[0];
-//                for (int i = 1; i < arraySize; i++) {
-//                    if (array[i] > max) {
-//                        max = array[i];
-//                    }
-//                }
-//
-//                System.out.println("Максимальное число в массиве: " + max);
+                // 2
+                try {
+                    System.out.print("Введите делимое: ");
+                    int dividend = scanner.nextInt();
+                    System.out.print("Введите делитель: ");
+                    int divisor = scanner.nextInt();
 
-                //15
+                    double result = divide(dividend, divisor);
+                    System.out.println("Результат деления: " + result);
+                } catch (ArithmeticException e) {
+                    System.out.println("Ошибка: " + e.getMessage());
+                }
 
-//                Scanner scanner = new Scanner(System.in);
-//                System.out.print("Введите размер массива: ");
-//                int arraySize = scanner.nextInt();
-//
-//                int[] array = new int[arraySize];
-//                System.out.println("Введите элементы массива:");
-//                for (int i = 0; i < arraySize; i++) {
-//                    array[i] = scanner.nextInt();
-//                }
-//
-//                int sum = 0;
-//                for (int i = 0; i < arraySize; i++) {
-//                    sum += array[i];
-//                }
-//
-//                System.out.println("Сумма всех элементов массива: " + sum);
+                // 3
+                try {
+                    System.out.print("Введите строку для конвертации: ");
+                    String str = scanner.next();
 
-                //16
+                    int number = convertToInt(str);
+                    System.out.println("Конвертированное число: " + number);
+                } catch (NumberFormatException e) {
+                    System.out.println("Ошибка: " + e.getMessage());
+                }
 
-//                Scanner scanner = new Scanner(System.in);
-//                System.out.print("Введите размер массива: ");
-//                int arraySize = scanner.nextInt();
-//
-//                int[] array = new int[arraySize];
-//                System.out.println("Введите элементы массива:");
-//                for (int i = 0; i < arraySize; i++) {
-//                    array[i] = scanner.nextInt();
-//                }
-//
-//                int positiveCount = 0;
-//                int negativeCount = 0;
-//                for (int i = 0; i < arraySize; i++) {
-//                    if (array[i] > 0) {
-//                        positiveCount++;
-//                    } else if (array[i] < 0) {
-//                        negativeCount++;
-//                    }
-//                }
-//
-//                System.out.println("Количество положительных чисел: " + positiveCount);
-//                System.out.println("Количество отрицательных чисел: " + negativeCount);
+                // 4
+                try {
+                    System.out.print("Введите возраст: ");
+                    int age = scanner.nextInt();
 
-                //17
+                    checkAge(age);
+                    System.out.println("Возраст корректный");
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Ошибка: " + e.getMessage());
+                }
 
-//                Scanner scanner = new Scanner(System.in);
-//                System.out.print("Введите число A: ");
-//                int a = scanner.nextInt();
-//                System.out.print("Введите число B: ");
-//                int b = scanner.nextInt();
-//
-//                System.out.print("Простые числа в диапазоне от " + a + " до " + b + ": ");
-//                for (int i = a; i <= b; i++) {
-//                    if (isPrime(i)) {
-//                        System.out.print(i + " ");
-//                    }
-//                }
-//                System.out.println();
-//            }
-//
-//            private static boolean isPrime(int number) {
-//                if (number <= 1) {
-//                    return false;
-//                }
-//                for (int i = 2; i <= Math.sqrt(number); i++) {
-//                    if (number % i == 0) {
-//                        return false;
-//                    }
-//                }
-//                return true;
+                // 5
+                try {
+                    System.out.print("Введите число для нахождения корня: ");
+                    double num = scanner.nextDouble();
 
-                //17
+                    double root = findSquareRoot(num);
+                    System.out.println("Квадратный корень: " + root);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Ошибка: " + e.getMessage());
+                }
 
-//                Scanner scanner = new Scanner(System.in);
-//                System.out.print("Введите строку: ");
-//                String inputString = scanner.nextLine();
-//
-//                int vowelCount = 0;
-//                int consonantCount = 0;
-//                for (int i = 0; i < inputString.length(); i++) {
-//                    char ch = Character.toLowerCase(inputString.charAt(i));
-//                    if (ch >= 'a' && ch <= 'z') {
-//                        if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u') {
-//                            vowelCount++;
-//                        } else {
-//                            consonantCount++;
-//                        }
-//                    }
-//                }
-//
-//                System.out.println("Количество гласных букв: " + vowelCount);
-//                System.out.println("Количество согласных букв: " + consonantCount);
+                // 6
+                try {
+                    System.out.print("Введите число для вычисления факториала: ");
+                    int num = scanner.nextInt();
 
-                //19
+                    long factorial = factorial(num);
+                    System.out.println("Факториал: " + factorial);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Ошибка: " + e.getMessage());
+                }
 
-//                Scanner scanner = new Scanner(System.in);
-//                System.out.print("Введите строку: ");
-//                String inputString = scanner.nextLine();
-//
-//                String[] words = inputString.split(" ");
-//                StringBuilder reversedString = new StringBuilder();
-//                for (int i = words.length - 1; i >= 0; i--) {
-//                    reversedString.append(words[i]).append(" ");
-//                }
-//
-//                System.out.println("Слова в обратном порядке: " + reversedString.toString().trim());
+                // 7
+                try {
+                    System.out.print("Введите размер массива: ");
+                    int size = scanner.nextInt();
+                    int[] array = new int[size];
+                    System.out.println("Введите элементы массива:");
+                    for (int i = 0; i < size; i++) {
+                        array[i] = scanner.nextInt();
+                    }
 
-                //20
+                    checkArrayForZeros(array);
+                    System.out.println("В массиве нет нулей");
+                } catch (Exception e) {
+                    System.out.println("Ошибка: " + e.getMessage());
+                }
 
-//                Scanner scanner = new Scanner(System.in);
-//                System.out.print("Введите целое число: ");
-//                int number = scanner.nextInt();
-//
-//                int originalNumber = number;
-//                int digitCount = 0;
-//                int sum = 0;
-//
-//                while (number != 0) {
-//                    digitCount++;
-//                    number /= 10;
-//                }
-//
-//                number = originalNumber;
-//                while (number != 0) {
-//                    int digit = number % 10;
-//                    sum += Math.pow(digit, digitCount);
-//                    number /= 10;
-//                }
-//
-//                if (sum == originalNumber) {
-//                    System.out.println(originalNumber + " - число Армстронга");
-//                } else {
-//                    System.out.println(originalNumber + " - не число Армстронга");
-//                }
+                // 8
+                try {
+                    System.out.print("Введите основание: ");
+                    double base = scanner.nextDouble();
+                    System.out.print("Введите степень: ");
+                    int exponent = scanner.nextInt();
 
-    }
-}
+                    double result = power(base, exponent);
+                    System.out.println("Результат: " + result);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Ошибка: " + e.getMessage());
+                }
+
+                // 9
+                try {
+                    System.out.print("Введите строку: ");
+                    String str = scanner.next();
+                    System.out.print("Введите максимальную длину: ");
+                    int maxLength = scanner.nextInt();
+
+                    String truncatedString = truncateString(str, maxLength);
+                    System.out.println("Обрезанная строка: " + truncatedString);
+                } catch (Exception e) {
+                    System.out.println("Ошибка: " + e.getMessage());
+                }
+
+                // 10
+                try {
+                    System.out.print("Введите размер массива: ");
+                    int size = scanner.nextInt();
+                    int[] array = new int[size];
+                    System.out.println("Введите элементы массива:");
+                    for (int i = 0; i < size; i++) {
+                        array[i] = scanner.nextInt();
+                    }
+                    System.out.print("Введите элемент для поиска: ");
+                    int element = scanner.nextInt();
+
+                    int index = findElement(array, element);
+                    System.out.println("Индекс элемента: " + index);
+                } catch (Exception e) {
+                    System.out.println("Ошибка: " + e.getMessage());
+                }
+
+                // 11
+                try {
+                    System.out.print("Введите целое число: ");
+                    int num = scanner.nextInt();
+
+                    String binary = convertToBinary(num);
+                    System.out.println("Двоичное представление: " + binary);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Ошибка: " + e.getMessage());
+                }
+
+                // 12
+                try {
+                    System.out.print("Введите делимое: ");
+                    int dividend = scanner.nextInt();
+                    System.out.print("Введите делитель: ");
+                    int divisor = scanner.nextInt();
+
+                    boolean divisible = isDivisible(dividend, divisor);
+                    if (divisible) {
+                        System.out.println("Делится");
+                    } else {
+                        System.out.println("Не делится");
+                    }
+                } catch (ArithmeticException e) {
+                    System.out.println("Ошибка: " + e.getMessage());
+                }
+
+                // 13
+                try {
+                    List<String> list = Arrays.asList("One", "Two", "Three");
+                    System.out.print("Введите индекс элемента: ");
+                    int index = scanner.nextInt();
+
+                    String element = getElementFromList(list, index);
+                    System.out.println("Элемент: " + element);
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("Ошибка: " + e.getMessage());
+                }
+
+                // 14
+                try {
+                    System.out.print("Введите пароль: ");
+                    String password = scanner.next();
+
+                    checkPassword(password);
+                    System.out.println("Пароль корректный");
+                } catch (WeakPasswordException e) {
+                    System.out.println("Ошибка: " + e.getMessage());
+                }
+
+                // 15
+                try {
+                    System.out.print("Введите дату в формате dd.MM.yyyy: ");
+                    String date = scanner.next();
+
+                    checkDate(date);
+                    System.out.println("Дата корректная");
+                } catch (DateTimeParseException e) {
+                    System.out.println("Ошибка: Некорректный формат даты. Должен быть dd.MM.yyyy");
+                    System.out.println("Ошибка: " + e.getMessage());
+                }
+
+                // 16
+                try {
+                    System.out.print("Введите первую строку: ");
+                    String str1 = scanner.next();
+                    System.out.print("Введите вторую строку: ");
+                    String str2 = scanner.next();
+
+                    String concatenatedString = concatenateStrings(str1, str2);
+                    System.out.println("Объединенная строка: " + concatenatedString);
+                } catch (NullPointerException e) {
+                    System.out.println("Ошибка: " + e.getMessage());
+                }
+
+                // 17
+                try {
+                    System.out.print("Введите делимое: ");
+                    int dividend = scanner.nextInt();
+                    System.out.print("Введите делитель: ");
+                    int divisor = scanner.nextInt();
+
+                    int remainder = getRemainder(dividend, divisor);
+                    System.out.println("Остаток: " + remainder);
+                } catch (ArithmeticException e) {
+                    System.out.println("Ошибка: " + e.getMessage());
+                }
+
+                // 18
+                try {
+                    System.out.print("Введите число для нахождения квадратного корня: ");
+                    double num = scanner.nextDouble();
+
+                    double root = squareRoot(num);
+                    System.out.println("Квадратный корень: " + root);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Ошибка: " + e.getMessage());
+                }
+
+                // 19
+                try {
+                    System.out.print("Введите температуру в Цельсиях: ");
+                    double celsius = scanner.nextDouble();
+
+                    double fahrenheit = celsiusToFahrenheit(celsius);
+                    System.out.println("Температура в Фаренгейтах: " + fahrenheit);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Ошибка: " + e.getMessage());
+                }
+
+                // 20
+                try {
+                    System.out.print("Введите строку: ");
+                    String str = scanner.next();
+
+                    checkEmptyString(str);
+                    System.out.println("Строка не пустая");
+                } catch (Exception e) {
+                    System.out.println("Ошибка: " + e.getMessage());
+                }
+
+                scanner.close();
+            }
+        }
